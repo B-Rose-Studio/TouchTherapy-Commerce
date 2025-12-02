@@ -1,0 +1,41 @@
+#!/bin/sh
+
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+echo "${YELLOW}>> Iniciando verificação de integridade (Pre-commit Hook)${NC}"
+
+# ------------------------------------------------------------------------------
+# ETAPA 1: Verificação de Estilo (Format)
+# ------------------------------------------------------------------------------
+printf "1/2 Verificando formatação (cargo fmt)... "
+
+cargo fmt --all -- --check > /dev/null 2>&1
+
+if [ $? -ne 0 ]; then
+    echo "${RED}[FALHA]${NC}"
+    echo "\n${RED}[ERRO] O código viola os padrões de estilo do projeto.${NC}"
+    echo "Ação requerida: Execute 'cargo fmt' na raiz do workspace."
+    exit 1
+fi
+
+echo "${GREEN}[OK]${NC}"
+
+# ------------------------------------------------------------------------------
+# ETAPA 2: Análise Estática e Warnings (Clippy)
+# ------------------------------------------------------------------------------
+echo "2/2 Analisando código estaticamente (cargo clippy)..."
+
+
+cargo clippy --workspace --all-targets --all-features -- -D warnings
+
+if [ $? -ne 0 ]; then
+    echo "\n${RED}[ERRO] A análise estática encontrou warnings ou erros.${NC}"
+    echo "A política do projeto não permite commits com warnings."
+    exit 1
+fi
+
+echo "${GREEN}>> Verificações concluídas com sucesso. Commit autorizado.${NC}"
+exit 0
