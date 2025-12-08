@@ -11,9 +11,7 @@ pub struct Appointment<'a> {
     pub professional: User<'a>,
     pub service: Service<'a>,
 
-    pub date_start: Vec<DateTime<Utc>>,
-    pub date_end: Vec<DateTime<Utc>>,
-    pub status: AppointmentStatus,
+    pub sessions: Vec<Session>,
     pub payment_method: PaymentMethod,
     pub payment_status: PaymentStatus,
 
@@ -22,10 +20,16 @@ pub struct Appointment<'a> {
 }
 
 #[derive(Serialize, Deserialize)]
+pub struct Session {
+    pub date_start: Option<DateTime<Utc>>,
+    pub date_end: Option<DateTime<Utc>>,
+    pub status: AppointmentStatus,
+}
+
+#[derive(Serialize, Deserialize)]
 pub enum AppointmentStatus {
     Pending,
-    Paid,
-    Confirmed,
-    Completed,
+    Scheduled,
     Canceled,
+    NoShow,
 }
