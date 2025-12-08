@@ -3,6 +3,7 @@ use serde::{Deserialize, Serialize};
 
 mod appointment;
 mod equipment;
+mod product;
 mod roles;
 mod service;
 mod suppliers;
@@ -10,6 +11,7 @@ mod user;
 
 pub use appointment::*;
 pub use equipment::*;
+pub use product::*;
 pub use roles::*;
 pub use service::*;
 pub use suppliers::*;
