@@ -8,6 +8,7 @@ pub struct Service<'a> {
 
     pub name: &'a str,
     pub description: &'a str,
+    pub images: Vec<&'a str>,
     pub duration: u8,
     pub price: f64,
     pub sessions: u8,
