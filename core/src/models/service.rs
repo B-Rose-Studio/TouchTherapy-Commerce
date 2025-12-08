@@ -1,4 +1,4 @@
-use super::{Equipment, Log, User};
+use super::{Category, Equipment, Log, User};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
@@ -10,7 +10,8 @@ pub struct Service<'a> {
     pub duration: u8,
     pub price: f64,
     pub equipments: Vec<Equipment<'a>>,
-    pub active: bool,
     pub professionals: Vec<User<'a>>,
+    pub categories: Vec<Category<'a>>,
+    pub active: bool,
     pub log: Log,
 }

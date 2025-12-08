@@ -1,3 +1,4 @@
+use super::Category;
 use super::{Log, Supplier};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
@@ -11,6 +12,7 @@ pub struct Product<'a> {
     pub quantity: u16,
     pub sku: &'a str,
     pub imagens: Vec<&'a str>,
+    pub categories: Vec<Category<'a>>,
     pub supplier: Supplier<'a>,
     pub active: bool,
     pub log: Log,

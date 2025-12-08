@@ -2,6 +2,7 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
 mod appointment;
+mod category;
 mod equipment;
 mod product;
 mod roles;
@@ -10,6 +11,7 @@ mod suppliers;
 mod user;
 
 pub use appointment::*;
+pub use category::*;
 pub use equipment::*;
 pub use product::*;
 pub use roles::*;
