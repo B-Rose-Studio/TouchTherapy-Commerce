@@ -4,12 +4,12 @@ use uuid::Uuid;
 
 #[derive(Serialize, Deserialize)]
 pub struct Service<'a> {
-    id: Uuid,
-    name: &'a str,
-    description: &'a str,
-    duration: u8,
-    price: f64,
-    equipments: Vec<Equipment<'a>>,
-    active: bool,
-    log: Log,
+    pub id: Uuid,
+    pub name: &'a str,
+    pub description: &'a str,
+    pub duration: u8,
+    pub price: f64,
+    pub equipments: Vec<Equipment<'a>>,
+    pub active: bool,
+    pub log: Log,
 }

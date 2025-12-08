@@ -5,12 +5,13 @@ use uuid::Uuid;
 
 #[derive(Serialize, Deserialize)]
 pub struct Equipment<'a> {
-    id: Uuid,
-    name: &'a str,
-    serial: &'a str,
-    status: EquipmentStatus,
-    purchased_at: DateTime<Utc>,
-    log: Log,
+    pub id: Uuid,
+    pub name: &'a str,
+    pub serial: &'a str,
+    pub status: EquipmentStatus,
+    pub quantity: u16,
+    pub purchased_at: DateTime<Utc>,
+    pub log: Log,
 }
 
 #[derive(Serialize, Deserialize)]

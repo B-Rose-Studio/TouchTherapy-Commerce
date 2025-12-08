@@ -15,6 +15,6 @@ pub use user::*;
 
 #[derive(Serialize, Deserialize)]
 pub struct Log {
-    created_at: DateTime<Utc>,
-    updated_at: DateTime<Utc>,
+    pub created_at: DateTime<Utc>,
+    pub updated_at: DateTime<Utc>,
 }

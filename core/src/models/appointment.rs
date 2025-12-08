@@ -5,16 +5,17 @@ use uuid::Uuid;
 
 #[derive(Serialize, Deserialize)]
 pub struct Appointment<'a> {
-    id: Uuid,
+    pub id: Uuid,
 
     #[serde(borrow)]
-    client: User<'a>,
-    service: Service<'a>,
+    pub client: User<'a>,
+    pub professional: User<'a>,
+    pub service: Service<'a>,
 
-    date_start: DateTime<Utc>,
-    date_end: DateTime<Utc>,
-    status: AppointmentStatus,
-    observations: &'a str,
+    pub date_start: DateTime<Utc>,
+    pub date_end: DateTime<Utc>,
+    pub status: AppointmentStatus,
+    pub observations: &'a str,
 }
 
 #[derive(Serialize, Deserialize)]

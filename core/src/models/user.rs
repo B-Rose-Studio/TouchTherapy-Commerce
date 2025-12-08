@@ -5,13 +5,13 @@ use uuid::Uuid;
 
 #[derive(Serialize, Deserialize)]
 pub struct User<'a> {
-    id: Uuid,
-    full_name: &'a str,
-    email: &'a str,
-    cpf: &'a str,
-    phone: &'a str,
-    birth: DateTime<Utc>,
-    role: Roles,
-    active: bool,
-    log: Log,
+    pub id: Uuid,
+    pub full_name: &'a str,
+    pub email: &'a str,
+    pub cpf: &'a str,
+    pub phone: &'a str,
+    pub birth: DateTime<Utc>,
+    pub role: Roles,
+    pub active: bool,
+    pub log: Log,
 }
