@@ -11,7 +11,7 @@ mod payment;
 mod product;
 mod roles;
 mod service;
-mod suppliers;
+mod supplier;
 mod user;
 
 pub use appointment::*;
@@ -24,7 +24,7 @@ pub use payment::*;
 pub use product::*;
 pub use roles::*;
 pub use service::*;
-pub use suppliers::*;
+pub use supplier::*;
 pub use user::*;
 
 #[derive(Serialize, Deserialize)]

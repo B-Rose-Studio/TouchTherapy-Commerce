@@ -1,4 +1,4 @@
-use super::{Log, Roles, UserAuth};
+use super::{Log, Role, UserAuth};
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
@@ -16,7 +16,7 @@ pub struct User<'a> {
     pub phone: &'a str,
     pub birth: DateTime<Utc>,
 
-    pub role: Vec<Roles>,
+    pub role: Role<'a>,
     pub active: bool,
 
     pub log: Log,
