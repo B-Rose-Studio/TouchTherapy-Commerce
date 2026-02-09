@@ -1,19 +1,9 @@
-use std::str::FromStr;
-
 use super::{PaymentMethod, PaymentStatus, Service, User};
 use crate::models::Log;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
+use std::{ops::Deref, str::FromStr};
 use uuid::Uuid;
-
-#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct AppointmentId(Uuid);
-
-impl AppointmentId {
-    pub fn new(id: &str) -> Self {
-        Self(Uuid::from_str(id).unwrap())
-    }
-}
 
 #[derive(Serialize, Deserialize, PartialEq)]
 pub struct Appointment<'a> {
@@ -46,4 +36,21 @@ pub enum AppointmentStatus {
     Canceled,
     Completed,
     NoShow,
+}
+
+#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
+pub struct AppointmentId(Uuid);
+
+impl AppointmentId {
+    pub fn new(id: &str) -> Self {
+        Self(Uuid::from_str(id).unwrap())
+    }
+}
+
+impl Deref for AppointmentId {
+    type Target = Uuid;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
 }

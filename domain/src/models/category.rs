@@ -1,8 +1,15 @@
-use std::str::FromStr;
+use std::{ops::Deref, str::FromStr};
 
 use super::Log;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
+
+#[derive(Serialize, Deserialize, PartialEq)]
+pub struct Category<'a> {
+    pub id: CategoryId,
+    pub name: &'a str,
+    pub log: Log,
+}
 
 #[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct CategoryId(Uuid);
@@ -13,9 +20,10 @@ impl CategoryId {
     }
 }
 
-#[derive(Serialize, Deserialize, PartialEq)]
-pub struct Category<'a> {
-    pub id: CategoryId,
-    pub name: &'a str,
-    pub log: Log,
+impl Deref for CategoryId {
+    type Target = Uuid;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
 }

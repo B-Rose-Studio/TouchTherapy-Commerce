@@ -1,8 +1,18 @@
-use std::str::FromStr;
+use std::{ops::Deref, str::FromStr};
 
 use super::Log;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
+
+#[derive(Serialize, Deserialize, PartialEq)]
+pub struct Supplier<'a> {
+    pub id: SupplierId,
+    pub name: &'a str,
+    pub cnpj: &'a str,
+    pub email: Option<&'a str>,
+    pub phone: Option<&'a str>,
+    pub log: Log,
+}
 
 #[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SupplierId(Uuid);
@@ -13,12 +23,10 @@ impl SupplierId {
     }
 }
 
-#[derive(Serialize, Deserialize, PartialEq)]
-pub struct Supplier<'a> {
-    pub id: SupplierId,
-    pub name: &'a str,
-    pub cnpj: &'a str,
-    pub email: Option<&'a str>,
-    pub phone: Option<&'a str>,
-    pub log: Log,
+impl Deref for SupplierId {
+    type Target = Uuid;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
 }

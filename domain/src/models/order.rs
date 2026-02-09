@@ -1,17 +1,8 @@
 use super::{Log, PaymentMethod, PaymentStatus, Product, User};
 use crate::models::Address;
 use serde::{Deserialize, Serialize};
-use std::str::FromStr;
+use std::{ops::Deref, str::FromStr};
 use uuid::Uuid;
-
-#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct OrderId(Uuid);
-
-impl OrderId {
-    pub fn new(id: &str) -> Self {
-        Self(Uuid::from_str(id).unwrap())
-    }
-}
 
 #[derive(Serialize, Deserialize, PartialEq)]
 pub struct Order<'a> {
@@ -44,4 +35,21 @@ pub enum OrderStatus {
     Sent,
     Delivered,
     Reversed,
+}
+
+#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
+pub struct OrderId(Uuid);
+
+impl OrderId {
+    pub fn new(id: &str) -> Self {
+        Self(Uuid::from_str(id).unwrap())
+    }
+}
+
+impl Deref for OrderId {
+    type Target = Uuid;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
 }

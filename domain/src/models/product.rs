@@ -1,18 +1,10 @@
+use std::ops::Deref;
 use std::str::FromStr;
 
 use super::Category;
 use super::{Log, Supplier};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-
-#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ProductId(Uuid);
-
-impl ProductId {
-    pub fn new(id: &str) -> Self {
-        Self(Uuid::from_str(id).unwrap())
-    }
-}
 
 #[derive(Serialize, Deserialize, PartialEq)]
 pub struct Product<'a> {
@@ -30,4 +22,21 @@ pub struct Product<'a> {
 
     pub active: bool,
     pub log: Log,
+}
+
+#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
+pub struct ProductId(Uuid);
+
+impl ProductId {
+    pub fn new(id: &str) -> Self {
+        Self(Uuid::from_str(id).unwrap())
+    }
+}
+
+impl Deref for ProductId {
+    type Target = Uuid;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
 }

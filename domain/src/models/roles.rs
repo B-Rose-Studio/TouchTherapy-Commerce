@@ -1,17 +1,8 @@
-use std::str::FromStr;
+use std::{ops::Deref, str::FromStr};
 
 use crate::models::Log;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-
-#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct RoleId(Uuid);
-
-impl RoleId {
-    pub fn new(id: &str) -> Self {
-        Self(Uuid::from_str(id).unwrap())
-    }
-}
 
 #[derive(Serialize, Deserialize, PartialEq)]
 pub struct Role<'a> {
@@ -38,4 +29,21 @@ pub enum Permissions {
     Create,
     Modify,
     Delete,
+}
+
+#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
+pub struct RoleId(Uuid);
+
+impl RoleId {
+    pub fn new(id: &str) -> Self {
+        Self(Uuid::from_str(id).unwrap())
+    }
+}
+
+impl Deref for RoleId {
+    type Target = Uuid;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
 }

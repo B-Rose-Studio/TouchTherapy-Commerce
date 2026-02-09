@@ -1,30 +1,36 @@
 [workspace]
-resolver = '2'
-members = ["domain", "dtos", "repository", "server", "services", "web"]
+resolver = "2"
+members = [
+  "domain",
+  "dtos",
+  "repository",
+  "security",
+  "server",
+  "services",
+  "web"
+]
 
 [workspace.dependencies]
-serde = { version = "1.0", features = ["derive"] }
-uuid = { version = "1.0", features = ["v4", "serde"] }
-chrono = { version = "0.4", features = ["serde"] }
-tokio = { version = "1.0", features = ["full"] }
-thiserror = "2.0"
 async-trait = "0.1.89"
+chrono = { version = "0.4", features = ["serde"] }
+domain = { path = "./domain" }
+dtos = { path = "./dtos" }
+repository = { path = "./repository" }
+security = { path = "./security" }
+serde = { version = "1.0", features = ["derive"] }
+services = { path = "./services" }
+thiserror = "2.0"
+tokio = { version = "1.0", features = ["full"] }
+uuid = { version = "1.0", features = ["serde", "v4"] }
 validator = { version = "0.20", features = ["derive"] }
 
-
-domain = { path = "./domain" }
-services = { path = "./services" }
-repository = { path = "./repository" }
-dtos = { path = "./dtos" }
-
 [profile]
-
-[profile.wasm-dev]
+[profile.android-dev]
 inherits = "dev"
-opt-level = 1
 
 [profile.server-dev]
 inherits = "dev"
 
-[profile.android-dev]
+[profile.wasm-dev]
 inherits = "dev"
+opt-level = 1

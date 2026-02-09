@@ -1,17 +1,8 @@
-use std::str::FromStr;
+use std::{ops::Deref, str::FromStr};
 
 use super::{Category, Equipment, Log, User};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
-
-#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct ServiceId(Uuid);
-
-impl ServiceId {
-    pub fn new(id: &str) -> Self {
-        Self(Uuid::from_str(id).unwrap())
-    }
-}
 
 #[derive(Serialize, Deserialize, PartialEq)]
 pub struct Service<'a> {
@@ -30,4 +21,21 @@ pub struct Service<'a> {
 
     pub active: bool,
     pub log: Log,
+}
+
+#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
+pub struct ServiceId(Uuid);
+
+impl ServiceId {
+    pub fn new(id: &str) -> Self {
+        Self(Uuid::from_str(id).unwrap())
+    }
+}
+
+impl Deref for ServiceId {
+    type Target = Uuid;
+
+    fn deref(&self) -> &Self::Target {
+        &self.0
+    }
 }
