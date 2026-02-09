@@ -1,4 +1,5 @@
 use super::{PaymentMethod, PaymentStatus, Service, User};
+use crate::models::Log;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
@@ -17,6 +18,7 @@ pub struct Appointment<'a> {
 
     pub nfe: &'a str,
     pub observations: &'a str,
+    pub log: Log,
 }
 
 #[derive(Serialize, Deserialize)]

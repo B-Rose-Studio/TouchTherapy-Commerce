@@ -1,0 +1,14 @@
+[package]
+name = "services"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+repository = { workspace = true }
+async-trait = { workspace = true }
+dtos = { workspace = true }
+validator = { workspace = true }
+thiserror = { workspace = true }
+domain = { workspace = true }
+uuid = { workspace = true }
+chrono = { workspace = true }

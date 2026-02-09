@@ -9,6 +9,5 @@ pub struct Supplier<'a> {
     pub cnpj: &'a str,
     pub email: Option<&'a str>,
     pub phone: Option<&'a str>,
-    pub active: bool,
     pub log: Log,
 }

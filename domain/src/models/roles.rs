@@ -1,3 +1,4 @@
+use crate::models::Log;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
@@ -6,14 +7,18 @@ pub struct Role<'a> {
     pub id: Uuid,
     pub name: &'a str,
 
-    pub user_permissions: Vec<Permissions>,
-    pub product_permissions: Vec<Permissions>,
-    pub category_permissions: Vec<Permissions>,
-    pub service_permissions: Vec<Permissions>,
-    pub appointment_permissions: Vec<Permissions>,
-    pub equipment_permissions: Vec<Permissions>,
-    pub supplier_permissions: Vec<Permissions>,
-    pub order_permissions: Vec<Permissions>,
+    pub users_permissions: Vec<Permissions>,
+    pub products_permissions: Vec<Permissions>,
+    pub categories_permissions: Vec<Permissions>,
+    pub services_permissions: Vec<Permissions>,
+    pub appointments_permissions: Vec<Permissions>,
+    pub equipments_permissions: Vec<Permissions>,
+    pub suppliers_permissions: Vec<Permissions>,
+    pub orders_permissions: Vec<Permissions>,
+    pub carts_permissions: Vec<Permissions>,
+    pub roles_permissions: Vec<Permissions>,
+
+    pub log: Log,
 }
 
 #[derive(Serialize, Deserialize)]

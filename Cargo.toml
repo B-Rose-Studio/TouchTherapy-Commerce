@@ -1,18 +1,21 @@
 [workspace]
 resolver = '2'
-members = ["adapters", "domain", "ports", "server", "web"]
+members = ["domain", "dtos", "repository", "server", "services", "web"]
 
 [workspace.dependencies]
 serde = { version = "1.0", features = ["derive"] }
 uuid = { version = "1.0", features = ["v4", "serde"] }
 chrono = { version = "0.4", features = ["serde"] }
 tokio = { version = "1.0", features = ["full"] }
-anyhow = "1.0"
+thiserror = "2.0"
 async-trait = "0.1.89"
+validator = { version = "0.20", features = ["derive"] }
+
 
 domain = { path = "./domain" }
-adapters = { path = "./adapter" }
-ports = { path = "./ports" }
+services = { path = "./services" }
+repository = { path = "./repository" }
+dtos = { path = "./dtos" }
 
 [profile]
 

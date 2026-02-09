@@ -1,3 +1,5 @@
+use crate::models::Address;
+
 use super::{Log, PaymentMethod, PaymentStatus, Product, User};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
@@ -6,8 +8,9 @@ use uuid::Uuid;
 pub struct Order<'a> {
     pub id: Uuid,
 
-    pub user: User<'a>,
-    pub producuts: Vec<ProductInfo<'a>>,
+    pub client: User<'a>,
+    pub products: Vec<ProductInfo<'a>>,
+    pub address: Address<'a>,
 
     pub status: OrderStatus,
     pub payment_method: PaymentMethod,

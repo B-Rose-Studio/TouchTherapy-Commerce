@@ -1,21 +1,21 @@
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
-mod appointment;
-mod auth;
-mod cart;
-mod category;
-mod equipment;
-mod order;
-mod payment;
-mod product;
-mod roles;
-mod service;
-mod supplier;
-mod user;
+mod address; // X
+mod appointment; // X
+mod cart; //X
+mod category; // X
+mod equipment; // X
+mod order; // X
+mod payment; // X
+mod product; // X
+mod roles; // X
+mod service; // X
+mod supplier; // X
+mod user; // X
 
+pub use address::*;
 pub use appointment::*;
-pub use auth::*;
 pub use cart::*;
 pub use category::*;
 pub use equipment::*;

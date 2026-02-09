@@ -1,9 +1,9 @@
 [package]
-name = "ports"
+name = "repository"
 version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+domain = { workspace = true }
 async-trait = { workspace = true }
 uuid = { workspace = true }
-domain = { workspace = true }
