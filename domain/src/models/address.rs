@@ -1,8 +1,19 @@
+use std::str::FromStr;
+
 use crate::models::Log;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
+pub struct AddressId(Uuid);
+
+impl AddressId {
+    pub fn new(id: &str) -> Self {
+        Self(Uuid::from_str(id).unwrap())
+    }
+}
+
+#[derive(Serialize, Deserialize, PartialEq)]
 pub struct Address<'a> {
     pub id: Uuid,
 

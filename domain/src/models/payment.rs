@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq, Eq)]
 pub enum PaymentMethod {
     Pix,
     CreditcCard,
@@ -8,7 +8,7 @@ pub enum PaymentMethod {
     Boleto,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq, Eq)]
 pub enum PaymentStatus {
     Pending,
     Paid,

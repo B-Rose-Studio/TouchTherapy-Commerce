@@ -1,12 +1,23 @@
+use std::str::FromStr;
+
 use super::{PaymentMethod, PaymentStatus, Service, User};
 use crate::models::Log;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
+pub struct AppointmentId(Uuid);
+
+impl AppointmentId {
+    pub fn new(id: &str) -> Self {
+        Self(Uuid::from_str(id).unwrap())
+    }
+}
+
+#[derive(Serialize, Deserialize, PartialEq)]
 pub struct Appointment<'a> {
-    pub id: Uuid,
+    pub id: AppointmentId,
 
     pub client: User<'a>,
     pub professional: User<'a>,
@@ -21,14 +32,14 @@ pub struct Appointment<'a> {
     pub log: Log,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq, Eq)]
 pub struct Session {
     pub date_start: Option<DateTime<Utc>>,
     pub date_end: Option<DateTime<Utc>>,
     pub status: AppointmentStatus,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq, Eq)]
 pub enum AppointmentStatus {
     Pending,
     Scheduled,

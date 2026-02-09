@@ -1,10 +1,21 @@
+use std::str::FromStr;
+
 use super::{Category, Equipment, Log, User};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
+pub struct ServiceId(Uuid);
+
+impl ServiceId {
+    pub fn new(id: &str) -> Self {
+        Self(Uuid::from_str(id).unwrap())
+    }
+}
+
+#[derive(Serialize, Deserialize, PartialEq)]
 pub struct Service<'a> {
-    pub id: Uuid,
+    pub id: ServiceId,
 
     pub name: &'a str,
     pub description: &'a str,

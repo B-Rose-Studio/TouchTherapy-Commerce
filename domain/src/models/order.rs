@@ -1,12 +1,21 @@
-use crate::models::Address;
-
 use super::{Log, PaymentMethod, PaymentStatus, Product, User};
+use crate::models::Address;
 use serde::{Deserialize, Serialize};
+use std::str::FromStr;
 use uuid::Uuid;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq, Eq, Hash)]
+pub struct OrderId(Uuid);
+
+impl OrderId {
+    pub fn new(id: &str) -> Self {
+        Self(Uuid::from_str(id).unwrap())
+    }
+}
+
+#[derive(Serialize, Deserialize, PartialEq)]
 pub struct Order<'a> {
-    pub id: Uuid,
+    pub id: OrderId,
 
     pub client: User<'a>,
     pub products: Vec<ProductInfo<'a>>,
@@ -21,7 +30,7 @@ pub struct Order<'a> {
     pub log: Log,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq)]
 pub struct ProductInfo<'a> {
     #[serde(borrow)]
     pub product: Product<'a>,
@@ -29,7 +38,7 @@ pub struct ProductInfo<'a> {
     pub price: f64,
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, PartialEq, Eq)]
 pub enum OrderStatus {
     Preparing,
     Sent,
