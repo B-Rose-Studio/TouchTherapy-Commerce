@@ -4,6 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-domain = { workspace = true }
 async-trait = { workspace = true }
-uuid = { workspace = true }
+chrono = { workspace = true }
+domain = { workspace = true }
+rustls = { version = "0.23", features = ["ring"] }
+serde = { workspace = true }
+serde_json = { workspace = true }
+# surrealdb = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true }

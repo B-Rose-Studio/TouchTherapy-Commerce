@@ -4,11 +4,13 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
-repository = { workspace = true }
 async-trait = { workspace = true }
-dtos = { workspace = true }
-validator = { workspace = true }
-thiserror = { workspace = true }
-domain = { workspace = true }
-uuid = { workspace = true }
 chrono = { workspace = true }
+domain = { workspace = true }
+dtos = { workspace = true }
+repository = { workspace = true }
+serde = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true }
+uuid = { workspace = true }
+validator = { workspace = true }
