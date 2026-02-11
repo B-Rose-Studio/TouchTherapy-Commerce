@@ -8,6 +8,7 @@ use tokio::sync::RwLock;
 
 pub mod email;
 pub mod file;
+pub mod migrations;
 
 #[async_trait::async_trait]
 pub trait Service: Sync + Send {

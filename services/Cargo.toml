@@ -16,4 +16,5 @@ lettre = "0.11.19"
 repository = { workspace = true }
 security = { workspace = true }
 serde = { workspace = true }
+surrealdb = { workspace = true }
 tokio = { workspace = true }
