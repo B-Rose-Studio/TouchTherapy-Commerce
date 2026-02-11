@@ -6,6 +6,8 @@ mod s3_storage;
 pub use local_storage::*;
 pub use s3_storage::*;
 
+use crate::Service;
+
 pub enum FileAction {
     Open {
         path: String,
@@ -54,3 +56,5 @@ impl ErrorTrait for FileServiceError {
         )
     }
 }
+
+pub trait FileService: Service {}

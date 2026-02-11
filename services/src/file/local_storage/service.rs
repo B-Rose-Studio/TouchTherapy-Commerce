@@ -1,5 +1,5 @@
 use super::super::{FileAction, FileServiceError};
-use crate::Service;
+use crate::{Service, file::FileService};
 use std::{
     fs::{self, File},
     io::{Read, Write},
@@ -77,3 +77,5 @@ impl Service for LocalStorageService {
         }
     }
 }
+
+impl FileService for LocalStorageService {}

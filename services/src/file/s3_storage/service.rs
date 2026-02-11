@@ -1,7 +1,7 @@
 use super::super::{FileAction, FileServiceError};
 use crate::{
     Service,
-    file::{TempFile, content_type},
+    file::{FileService, TempFile, content_type},
 };
 
 use aws_config::{self, Region};
@@ -130,3 +130,5 @@ impl Service for S3StorageService {
         }
     }
 }
+
+impl FileService for S3StorageService {}
