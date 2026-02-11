@@ -7,4 +7,5 @@ pub struct SurrealDbConfig {
     pub password: String,
     pub namespace: String,
     pub database: String,
+    pub migrations: String,
 }

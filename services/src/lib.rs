@@ -6,6 +6,8 @@ use std::{
 };
 use tokio::sync::RwLock;
 
+pub mod file;
+
 #[async_trait::async_trait]
 pub trait Service: Sync + Send {
     type Args;
