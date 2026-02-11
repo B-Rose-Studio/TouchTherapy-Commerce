@@ -5,9 +5,9 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, PartialEq)]
-pub struct Role<'a> {
+pub struct Role {
     pub id: RoleId,
-    pub name: &'a str,
+    pub name: String,
 
     pub users_permissions: Vec<Permissions>,
     pub products_permissions: Vec<Permissions>,

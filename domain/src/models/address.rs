@@ -4,19 +4,19 @@ use std::{ops::Deref, str::FromStr};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, PartialEq)]
-pub struct Address<'a> {
+pub struct Address {
     pub id: Uuid,
 
-    pub name: &'a str,
-    pub phone: &'a str,
+    pub name: String,
+    pub phone: String,
 
-    pub postal_code: &'a str,
-    pub street_address: &'a str,
-    pub number: &'a str,
-    pub district: &'a str,
-    pub city: &'a str,
-    pub state: &'a str,
-    pub complement: &'a str,
+    pub postal_code: String,
+    pub street_address: String,
+    pub number: String,
+    pub district: String,
+    pub city: String,
+    pub state: String,
+    pub complement: String,
     pub log: Log,
 }
 

@@ -1,1 +1,2 @@
-pub mod send_email;
+mod send_email;
+pub use send_email::*;

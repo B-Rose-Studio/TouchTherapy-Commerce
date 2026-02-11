@@ -5,19 +5,19 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, PartialEq)]
-pub struct Service<'a> {
+pub struct Service {
     pub id: ServiceId,
 
-    pub name: &'a str,
-    pub description: &'a str,
-    pub images: Vec<&'a str>,
+    pub name: String,
+    pub description: String,
+    pub images: Vec<String>,
     pub duration: u8,
     pub price: f64,
     pub sessions: u8,
 
-    pub equipments: Vec<Equipment<'a>>,
-    pub professionals: Vec<User<'a>>,
-    pub categories: Vec<Category<'a>>,
+    pub equipments: Vec<Equipment>,
+    pub professionals: Vec<User>,
+    pub categories: Vec<Category>,
 
     pub active: bool,
     pub log: Log,

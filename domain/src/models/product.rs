@@ -7,18 +7,18 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, PartialEq)]
-pub struct Product<'a> {
+pub struct Product {
     pub id: ProductId,
 
-    pub name: &'a str,
-    pub description: &'a str,
+    pub name: String,
+    pub description: String,
     pub price: f64,
     pub quantity: u16,
-    pub sku: &'a str,
-    pub images: Vec<&'a str>,
+    pub sku: String,
+    pub images: Vec<String>,
 
-    pub categories: Vec<Category<'a>>,
-    pub supplier: Supplier<'a>,
+    pub categories: Vec<Category>,
+    pub supplier: Supplier,
 
     pub active: bool,
     pub log: Log,

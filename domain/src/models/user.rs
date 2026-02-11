@@ -6,23 +6,23 @@ use std::{ops::Deref, str::FromStr};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, PartialEq)]
-pub struct User<'a> {
+pub struct User {
     pub id: UserId,
 
-    pub name: &'a str,
-    pub email: &'a str,
-    pub password: &'a str,
-    pub cpf: &'a str,
-    pub phone: &'a str,
+    pub name: String,
+    pub email: String,
+    pub password: String,
+    pub cpf: String,
+    pub phone: String,
     pub birth: DateTime<Utc>,
 
-    pub addresses: Vec<Address<'a>>,
+    pub addresses: Vec<Address>,
 
     pub verified: bool,
     pub otp: bool,
-    pub secret_key: Option<&'a str>,
+    pub secret_key: Option<String>,
 
-    pub role: Role<'a>,
+    pub role: Role,
     pub active: bool,
 
     pub log: Log,

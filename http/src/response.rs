@@ -5,6 +5,7 @@ use domain::error::Error;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
+#[allow(dead_code)]
 #[derive(Clone, Debug, Serialize, Deserialize)]
 pub struct Response {
     #[serde(skip)]

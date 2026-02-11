@@ -5,26 +5,25 @@ use std::{ops::Deref, str::FromStr};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, PartialEq)]
-pub struct Order<'a> {
+pub struct Order {
     pub id: OrderId,
 
-    pub client: User<'a>,
-    pub products: Vec<ProductInfo<'a>>,
-    pub address: Address<'a>,
+    pub client: User,
+    pub products: Vec<ProductInfo>,
+    pub address: Address,
 
     pub status: OrderStatus,
     pub payment_method: PaymentMethod,
     pub payment_status: PaymentStatus,
     pub total: f64,
-    pub nfe: &'a str,
+    pub nfe: String,
 
     pub log: Log,
 }
 
 #[derive(Serialize, Deserialize, PartialEq)]
-pub struct ProductInfo<'a> {
-    #[serde(borrow)]
-    pub product: Product<'a>,
+pub struct ProductInfo {
+    pub product: Product,
     pub quantity: u16,
     pub price: f64,
 }

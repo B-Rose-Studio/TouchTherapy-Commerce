@@ -6,19 +6,19 @@ use std::{ops::Deref, str::FromStr};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, PartialEq)]
-pub struct Appointment<'a> {
+pub struct Appointment {
     pub id: AppointmentId,
 
-    pub client: User<'a>,
-    pub professional: User<'a>,
-    pub service: Service<'a>,
+    pub client: User,
+    pub professional: User,
+    pub service: Service,
 
     pub sessions: Vec<Session>,
     pub payment_method: PaymentMethod,
     pub payment_status: PaymentStatus,
 
-    pub nfe: &'a str,
-    pub observations: &'a str,
+    pub nfe: String,
+    pub observations: String,
     pub log: Log,
 }
 

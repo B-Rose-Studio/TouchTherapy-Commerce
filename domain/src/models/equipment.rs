@@ -5,10 +5,10 @@ use std::{ops::Deref, str::FromStr};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, PartialEq)]
-pub struct Equipment<'a> {
+pub struct Equipment {
     pub id: EquipmentId,
-    pub name: &'a str,
-    pub serial: &'a str,
+    pub name: String,
+    pub serial: String,
     pub status: EquipmentStatus,
     pub quantity: u16,
     pub purchased_at: DateTime<Utc>,

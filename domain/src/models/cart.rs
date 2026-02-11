@@ -6,12 +6,11 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, PartialEq)]
-pub struct Cart<'a> {
+pub struct Cart {
     pub id: CartId,
-    #[serde(borrow)]
-    pub user: Option<User<'a>>,
-    pub products: Vec<(Product<'a>, u16)>,
-    pub services: Vec<(Service<'a>, DateTime<Utc>)>,
+    pub user: Option<User>,
+    pub products: Vec<(Product, u16)>,
+    pub services: Vec<(Service, DateTime<Utc>)>,
     pub log: Log,
 }
 

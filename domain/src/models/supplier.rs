@@ -5,12 +5,12 @@ use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 #[derive(Serialize, Deserialize, PartialEq)]
-pub struct Supplier<'a> {
+pub struct Supplier {
     pub id: SupplierId,
-    pub name: &'a str,
-    pub cnpj: &'a str,
-    pub email: Option<&'a str>,
-    pub phone: Option<&'a str>,
+    pub name: String,
+    pub cnpj: String,
+    pub email: Option<String>,
+    pub phone: Option<String>,
     pub log: Log,
 }
 
