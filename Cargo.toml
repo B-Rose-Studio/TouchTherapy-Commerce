@@ -1,8 +1,10 @@
 [workspace]
 resolver = "2"
-members = ["config",
+members = [
+  "config",
   "domain",
   "dtos",
+  "http",
   "repository",
   "security",
   "server",
@@ -13,8 +15,10 @@ members = ["config",
 [workspace.dependencies]
 async-trait = "0.1.89"
 chrono = { version = "0.4", features = ["serde"] }
+config = { path = "config/" }
 domain = { path = "./domain" }
 dtos = { path = "./dtos" }
+http = { path = "http/" }
 repository = { path = "./repository" }
 security = { path = "./security" }
 serde = { version = "1.0", features = ["derive"] }
