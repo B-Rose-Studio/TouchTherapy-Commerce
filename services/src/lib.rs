@@ -6,6 +6,7 @@ use std::{
 };
 use tokio::sync::RwLock;
 
+pub mod email;
 pub mod file;
 
 #[async_trait::async_trait]

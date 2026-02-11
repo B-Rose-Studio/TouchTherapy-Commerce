@@ -1,24 +1,27 @@
 use serde::Serialize;
+use serde_json::Value;
 
 #[derive(Debug, Clone)]
-pub struct Error<T: Sized + Serialize> {
+pub struct Error {
     pub code: String,
     pub description: String,
-    pub content: T,
+    pub data: Value,
 }
 
-impl<T: Sized + Serialize> Error<T> {
-    pub fn new(code: impl Into<String>, description: impl Into<String>, content: T) -> Self {
+impl Error {
+    pub fn new<T: Sized + Serialize>(
+        code: impl Into<String>,
+        description: impl Into<String>,
+        data: T,
+    ) -> Self {
         Self {
             code: code.into(),
             description: description.into(),
-            content,
+            data: serde_json::to_value(data).unwrap(),
         }
     }
 }
 
 pub trait ErrorTrait {
-    type Out: Sized + Serialize;
-
-    fn error<T: Sized + Serialize>(&self) -> Error<Self::Out>;
+    fn error<T: Sized + Serialize>(&self) -> Error;
 }

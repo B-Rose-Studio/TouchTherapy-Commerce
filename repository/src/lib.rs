@@ -22,9 +22,7 @@ pub enum RepositoryError {
 }
 
 impl domain::error::ErrorTrait for RepositoryError {
-    type Out = ();
-
-    fn error<T: Sized + serde::Serialize>(&self) -> domain::error::Error<Self::Out> {
+    fn error<T: Sized + serde::Serialize>(&self) -> domain::error::Error {
         let mut error =
             domain::error::Error::new("DB_ERROR_UNKNOW", "Unknown error repository", ());
 

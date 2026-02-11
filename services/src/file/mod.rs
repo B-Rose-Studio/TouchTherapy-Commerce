@@ -46,9 +46,7 @@ fn content_type(key: &str) -> &str {
 pub struct FileServiceError(pub String);
 
 impl ErrorTrait for FileServiceError {
-    type Out = ();
-
-    fn error<T: Sized + Serialize>(&self) -> domain::error::Error<Self::Out> {
+    fn error<T: Sized + Serialize>(&self) -> domain::error::Error {
         domain::error::Error::new(
             "IO_SERVER_ERROR",
             format!("file service error: {}", self.0),
