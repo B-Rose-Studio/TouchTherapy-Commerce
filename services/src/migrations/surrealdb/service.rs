@@ -48,7 +48,12 @@ impl Service for SurrealDbMigrationService {
 
             MigrationActions::RevertAll => {}
 
-            MigrationActions::Clean => {}
+            MigrationActions::Clean => {
+                self.db
+                    .query("DELETE script_migration;")
+                    .await
+                    .map_err(|e| MigrationError(e.to_string()))?;
+            }
         }
 
         Err(MigrationError("Not Implemented".into()))
