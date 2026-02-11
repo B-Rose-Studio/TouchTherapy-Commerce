@@ -1,4 +1,4 @@
-//pub mod user;
+pub mod user;
 
 pub type RepositoryResult<T> = Result<T, RepositoryError>;
 
@@ -38,7 +38,7 @@ impl domain::error::ErrorTrait for RepositoryError {
             }
 
             RepositoryError::EntityNotFound(e) => {
-                error.code = "DB_ERROR_NOTFOUDN".into();
+                error.code = "DB_ERROR_NOTFOUND".into();
                 error.description = format!("The entity '{0}' not found", e)
             }
         }

@@ -1,0 +1,12 @@
+[package]
+name = "controller"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+domain = { workspace = true }
+dtos = { workspace = true }
+repository = { workspace = true }
+security = { workspace = true }
+serde = { workspace = true }
+services = { workspace = true }

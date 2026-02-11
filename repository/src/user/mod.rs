@@ -1,3 +1,3 @@
-mod user_interface;
+mod interface;
 
-pub use user_interface::*;
+pub use interface::*;

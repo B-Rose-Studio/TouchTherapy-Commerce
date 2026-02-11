@@ -179,6 +179,16 @@ Registro imutável de uma transação finalizada.
 - [ ] **Intervalo:** Deve haver um intervalo automático de 10 minutos entre sessões para higienização da sala (se aplicável).
 
 ---
+## 📡 Endpoints da API (V1)
 
-# GUIDE COMMANDS
+| Categoria | Método | Rota | Protegido |
+| --- | --- | --- | --- |
+| **Auth** | `POST` | `/api/auth/register` | ❌ |
+| **Auth** | `POST` | `/api/auth/login` | ❌ |
+| **Auth** | `POST` | `/api/auth/reset-password` | ❌ |
+| **Auth** | `GET` | `/api/auth/user` | ✅ |
+| --- | --- | --- | --- |
 
+---
+
+## GUIDE COMMANDS

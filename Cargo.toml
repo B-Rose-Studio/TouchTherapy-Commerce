@@ -2,6 +2,7 @@
 resolver = "2"
 members = [
   "config",
+  "controller",
   "domain",
   "dtos",
   "http",
@@ -16,6 +17,7 @@ members = [
 async-trait = "0.1.89"
 chrono = { version = "0.4", features = ["serde"] }
 config = { path = "config/" }
+controller = { path = "controller/" }
 domain = { path = "./domain" }
 dtos = { path = "./dtos" }
 http = { path = "http/" }
