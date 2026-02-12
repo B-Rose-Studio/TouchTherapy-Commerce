@@ -2,9 +2,16 @@ mod builder;
 mod service;
 
 pub use builder::*;
-use domain::error::ErrorTrait;
 pub use service::*;
 
+use serde::{Deserialize, Serialize};
+#[derive(Serialize, Deserialize)]
+pub struct MigrationRegister {
+    script_name: String,
+    execited_at: chrono::DateTime<chrono::Utc>,
+}
+
+use domain::error::ErrorTrait;
 pub struct MigrationError(pub String);
 
 impl ErrorTrait for MigrationError {

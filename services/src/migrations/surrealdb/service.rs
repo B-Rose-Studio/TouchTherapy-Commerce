@@ -1,20 +1,34 @@
-use std::sync::Arc;
+use std::{path::PathBuf, sync::Arc};
 use surrealdb::{Surreal, engine::any::Any};
+use tokio::{fs::File, io::AsyncReadExt};
 
 const QUERY_CREATE_TABLE: &str = "
-DEFINE TABLE OVERWRITE script_migration SCHEMAFULL
+DEFINE TABLE OVERWRITE _migrations SCHEMAFULL
     PERMISSIONS
         FOR select FULL
         FOR create, update, delete NONE;
 
-DEFINE FIELD OVERWRITE script_name ON script_migration TYPE string;
-DEFINE FIELD OVERWRITE executed_at ON script_migration TYPE datetime VALUE time::now() READONLY;
-DEFINE FIELD OVERWRITE checksum ON script_migration TYPE option<string>;
+DEFINE FIELD OVERWRITE script_name ON _migrations TYPE string;
+DEFINE FIELD OVERWRITE executed_at ON _migrations TYPE datetime VALUE time::now() READONLY;
+";
+
+const QUERY_CREATE_MIGRATION: &str = "
+INSERT INTO _migrations {
+    script_name: $name
+};
+";
+
+const QUERY_DELETE_MIGRATION: &str = "
+DELETE _migrations WHERE script_name = $name;
+";
+
+const QUERY_CLEAN_MIGRATIONS: &str = "
+DELETE _migrations;
 ";
 
 use crate::{
     Service,
-    migrations::{MigrationActions, MigrationError, MigrationService},
+    migrations::{MigrationActions, MigrationError, MigrationRegister, MigrationService},
 };
 
 pub struct SurrealDbMigrationService {
@@ -39,18 +53,28 @@ impl Service for SurrealDbMigrationService {
             .await
             .map_err(|e| MigrationError(e.to_string()))?;
 
+        let migrations: Vec<MigrationRegister> = self
+            .db
+            .select("_migrations")
+            .await
+            .map_err(|e| MigrationError(e.to_string()))?;
+
         match args {
-            MigrationActions::Run(_name) => {}
+            MigrationActions::Run(name) => {
+                self.apply_migration(&name, &migrations).await?;
+            }
 
             MigrationActions::RunAll => {}
 
-            MigrationActions::Reverte(_name) => {}
+            MigrationActions::Reverte(name) => {
+                self.revert_migration(&name, &migrations).await?;
+            }
 
             MigrationActions::RevertAll => {}
 
             MigrationActions::Clean => {
                 self.db
-                    .query("DELETE script_migration;")
+                    .query(QUERY_CLEAN_MIGRATIONS)
                     .await
                     .map_err(|e| MigrationError(e.to_string()))?;
             }
@@ -61,3 +85,66 @@ impl Service for SurrealDbMigrationService {
 }
 
 impl MigrationService for SurrealDbMigrationService {}
+
+impl SurrealDbMigrationService {
+    async fn apply_migration(
+        &self,
+        name: &str,
+        migrations: &[MigrationRegister],
+    ) -> Result<(), MigrationError> {
+        if migrations.iter().any(|m| m.script_name == name) {
+            return Ok(());
+        }
+
+        let mut path = PathBuf::from(&self.path);
+        path.push(name);
+
+        let mut file_script = File::open(&path)
+            .await
+            .map_err(|e| MigrationError(e.to_string()))?;
+
+        let mut query = String::new();
+        let _ = file_script.read_to_string(&mut query).await;
+
+        self.db
+            .query(query)
+            .await
+            .map_err(|e| MigrationError(e.to_string()))?;
+
+        self.db
+            .query(QUERY_CREATE_MIGRATION)
+            .bind(("name", name.to_string()))
+            .await
+            .map_err(|e| MigrationError(e.to_string()))?;
+
+        Ok(())
+    }
+
+    async fn revert_migration(
+        &self,
+        name: &str,
+        migrations: &[MigrationRegister],
+    ) -> Result<(), MigrationError> {
+        if !migrations.iter().any(|m| m.script_name == name) {
+            return Ok(());
+        }
+
+        let mut path = PathBuf::from(&self.path);
+        path.push(format!("!{name}"));
+
+        let mut file_script = File::open(&path)
+            .await
+            .map_err(|e| MigrationError(e.to_string()))?;
+
+        let mut query = String::new();
+        let _ = file_script.read_to_string(&mut query).await;
+
+        self.db
+            .query(QUERY_DELETE_MIGRATION)
+            .bind(("name", name.to_string()))
+            .await
+            .map_err(|e| MigrationError(e.to_string()))?;
+
+        Ok(())
+    }
+}
