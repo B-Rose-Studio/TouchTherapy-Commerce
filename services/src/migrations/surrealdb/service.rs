@@ -64,13 +64,58 @@ impl Service for SurrealDbMigrationService {
                 self.apply_migration(&name, &migrations).await?;
             }
 
-            MigrationActions::RunAll => {}
+            MigrationActions::RunAll => {
+                let mut files = Vec::new();
 
-            MigrationActions::Reverte(name) => {
-                self.revert_migration(&name, &migrations).await?;
+                for entry in
+                    std::fs::read_dir(&self.path).map_err(|e| MigrationError(e.to_string()))?
+                {
+                    let entry = entry.map_err(|e| MigrationError(e.to_string()))?;
+                    let path = entry.path();
+
+                    if path.is_file() {
+                        let filename = path.file_name().unwrap().to_str().unwrap().to_string();
+                        let is_reverte = filename.starts_with("!");
+
+                        if !is_reverte {
+                            files.push(filename);
+                        }
+                    }
+                }
+
+                for file in files {
+                    self.apply_migration(&file, &migrations).await?;
+                }
             }
 
-            MigrationActions::RevertAll => {}
+            MigrationActions::Reverte(name) => {
+                self.revert_migration(&format!("!{name}"), &migrations)
+                    .await?;
+            }
+
+            MigrationActions::RevertAll => {
+                let mut files = Vec::new();
+
+                for entry in
+                    std::fs::read_dir(&self.path).map_err(|e| MigrationError(e.to_string()))?
+                {
+                    let entry = entry.map_err(|e| MigrationError(e.to_string()))?;
+                    let path = entry.path();
+
+                    if path.is_file() {
+                        let filename = path.file_name().unwrap().to_str().unwrap().to_string();
+                        let is_reverte = filename.starts_with("!");
+
+                        if is_reverte {
+                            files.push(filename);
+                        }
+                    }
+                }
+
+                for file in files {
+                    self.revert_migration(&file, &migrations).await?;
+                }
+            }
 
             MigrationActions::Clean => {
                 self.db
@@ -92,7 +137,10 @@ impl SurrealDbMigrationService {
         name: &str,
         migrations: &[MigrationRegister],
     ) -> Result<(), MigrationError> {
-        if migrations.iter().any(|m| m.script_name == name) {
+        if migrations
+            .iter()
+            .any(|m| format!("!{}", m.script_name) == name)
+        {
             return Ok(());
         }
 
@@ -130,7 +178,7 @@ impl SurrealDbMigrationService {
         }
 
         let mut path = PathBuf::from(&self.path);
-        path.push(format!("!{name}"));
+        path.push(name);
 
         let mut file_script = File::open(&path)
             .await
